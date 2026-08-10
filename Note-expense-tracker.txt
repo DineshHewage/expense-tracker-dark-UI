@@ -1,0 +1,26 @@
+01. Requirements 
+- User can enter the expense-name and expense-amount and make a complete expense input. These 2 input fields should be in a same row - Done. 
+- User can move from expense-name input box to expense-amount input box via Tab key - Done.
+- User can add the expense amount manually and then can increments and decrement the entered amount - Done.
+- User can add, filled expenses(name and amount) to the expense list via mouse-click or keyboard-Enter key. 
+- When the user click the 'Add Expense' button, existing expense-amount and expense-name should be disappeared. 
+- The app can manage the length of the expense-name.
+- In the expense list, expense-amount, expense-name and delete button should be displayed for each expense item.
+- Expense list items should be able to remove through a 'delete' button. 
+- The expense list should be saved in the local-Storage. 
+- The total of the expense amount should be shown in the bottom.  
+- Though user refresh the page the total amount and the expense list does not change. 
+
+02. Edge casers. 
+- User can not add half completed(Need to fill the name and amount both) expenses to the expense list.
+- What is local-storage give a abnormal data?.
+
+03. Data point defining.
+- There should have a one array to store expense lists.
+{
+  id: "0001",
+  name: "Purchase egg",
+  amount: 5.50,
+}
+
+04. Ownership of the data points
