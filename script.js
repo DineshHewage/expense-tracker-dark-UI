@@ -3,9 +3,8 @@ const expenseNameInput = document.getElementById("expense-name");
 const expenseAmountInput = document.getElementById("expense-amount");
 const expenseList = document.getElementById("expense-list");
 const totalAmountDisplay = document.getElementById("total-amount");
-
-const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-let totalAmount = calculateTotal();
+// my code
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 renderExpense();
 
 expenseForm.addEventListener("submit", (e) => {
@@ -23,6 +22,7 @@ expenseForm.addEventListener("submit", (e) => {
     saveExpenseToLocal();
     renderExpense();
     updateTotal();
+    calculateTotal();
 
     //clear input
     expenseNameInput.value = "";
@@ -30,7 +30,36 @@ expenseForm.addEventListener("submit", (e) => {
   }
 });
 
-function renderExpense() {}
-function calculateTotal() {}
-function saveExpenseToLocal() {}
-function updateTotal() {}
+function renderExpense() {
+  expenseList.innerHTML = "";
+  expenses.forEach((element) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${element.name} - $${element.amount} <button data-id="${element.id}">Delete</button>`;
+    expenseList.appendChild(li);
+  });
+}
+function calculateTotal() {
+  const totalExpense = expenses.reduce((previousValue, currentValue) => {
+    return previousValue + currentValue.amount;
+  }, 0);
+  updateTotal(totalExpense);
+}
+
+function updateTotal(totalExpense) {
+  totalAmountDisplay.textContent = totalExpense;
+}
+
+function saveExpenseToLocal() {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+calculateTotal();
+
+expenseList.addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") {
+    const id = e.target.dataset.id;
+    expenses = expenses.filter((ex) => ex.id !== Number(id));
+    saveExpenseToLocal();
+    renderExpense();
+    calculateTotal();
+  }
+});
