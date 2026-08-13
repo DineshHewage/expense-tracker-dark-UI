@@ -21,7 +21,6 @@ expenseForm.addEventListener("submit", (e) => {
     expenses.push(newExpense);
     saveExpenseToLocal();
     renderExpense();
-    updateTotal();
     calculateTotal();
 
     //clear input
@@ -34,7 +33,16 @@ function renderExpense() {
   expenseList.innerHTML = "";
   expenses.forEach((element) => {
     const li = document.createElement("li");
-    li.innerHTML = `${element.name} - $${element.amount} <button data-id="${element.id}">Delete</button>`;
+
+    const span = document.createElement("span");
+    span.textContent = `${element.name} - Rs ${element.amount.toFixed(2)}`;
+
+    const deteteBtn = document.createElement("button");
+    deteteBtn.textContent = "Delete";
+    deteteBtn.dataset.id = element.id;
+
+    li.appendChild(span);
+    li.appendChild(deteteBtn);
     expenseList.appendChild(li);
   });
 }
@@ -46,7 +54,7 @@ function calculateTotal() {
 }
 
 function updateTotal(totalExpense) {
-  totalAmountDisplay.textContent = totalExpense;
+  totalAmountDisplay.textContent = totalExpense.toFixed(2);
 }
 
 function saveExpenseToLocal() {
