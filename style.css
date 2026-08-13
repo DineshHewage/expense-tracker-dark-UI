@@ -123,3 +123,9 @@ button:hover {
 .hidden {
   display: none;
 }
+
+.error-msg {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}

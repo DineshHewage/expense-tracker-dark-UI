@@ -3,6 +3,7 @@ const expenseNameInput = document.getElementById("expense-name");
 const expenseAmountInput = document.getElementById("expense-amount");
 const expenseList = document.getElementById("expense-list");
 const totalAmountDisplay = document.getElementById("total-amount");
+//const emptyErrorMsg = document.getElementById("empty-error-message");
 // my code
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 renderExpense();
@@ -31,6 +32,14 @@ expenseForm.addEventListener("submit", (e) => {
 
 function renderExpense() {
   expenseList.innerHTML = "";
+
+  if (expenses.length === 0) {
+    const emptyErrorMsg = document.createElement("p");
+    emptyErrorMsg.textContent = "No expenses yet";
+    emptyErrorMsg.classList.add("error-msg");
+    expenseList.appendChild(emptyErrorMsg);
+  }
+
   expenses.forEach((element) => {
     const li = document.createElement("li");
 
