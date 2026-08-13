@@ -80,7 +80,7 @@ calculateTotal();
 expenseList.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
     // Ask user to reconfim the delete request.
-    const isConfirmed = confirm("Are you Sure?.");
+    const isConfirmed = confirm("Do you want to delete this expense?.");
     if (isConfirmed) {
       const id = e.target.dataset.id;
       expenses = expenses.filter((ex) => ex.id !== Number(id));
