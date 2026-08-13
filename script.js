@@ -3,11 +3,11 @@ const expenseNameInput = document.getElementById("expense-name");
 const expenseAmountInput = document.getElementById("expense-amount");
 const expenseList = document.getElementById("expense-list");
 const totalAmountDisplay = document.getElementById("total-amount");
-//const emptyErrorMsg = document.getElementById("empty-error-message");
-// my code
+
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 renderExpense();
 
+// Insert the user input
 expenseForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const name = expenseNameInput.value.trim();
@@ -30,6 +30,7 @@ expenseForm.addEventListener("submit", (e) => {
   }
 });
 
+// Load the expenses list
 function renderExpense() {
   expenseList.innerHTML = "";
 
@@ -55,6 +56,8 @@ function renderExpense() {
     expenseList.appendChild(li);
   });
 }
+
+// Calculate the total
 function calculateTotal() {
   const totalExpense = expenses.reduce((previousValue, currentValue) => {
     return previousValue + currentValue.amount;
@@ -62,21 +65,28 @@ function calculateTotal() {
   updateTotal(totalExpense);
 }
 
+// Update the total
 function updateTotal(totalExpense) {
   totalAmountDisplay.textContent = totalExpense.toFixed(2);
 }
 
+// Save to localstorage
 function saveExpenseToLocal() {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 calculateTotal();
 
+// Remove expense
 expenseList.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
-    const id = e.target.dataset.id;
-    expenses = expenses.filter((ex) => ex.id !== Number(id));
-    saveExpenseToLocal();
-    renderExpense();
-    calculateTotal();
+    // Ask user to reconfim the delete request.
+    const isConfirmed = confirm("Are you Sure?.");
+    if (isConfirmed) {
+      const id = e.target.dataset.id;
+      expenses = expenses.filter((ex) => ex.id !== Number(id));
+      saveExpenseToLocal();
+      renderExpense();
+      calculateTotal();
+    }
   }
 });
