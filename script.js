@@ -8,6 +8,8 @@ const addExpenseBtn = document.getElementById("add-expense-btn");
 const cancelBtn = document.getElementById("cancel-btn");
 
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let editingExpenseId = null;
+
 renderExpense();
 
 // Insert the user input
@@ -50,11 +52,13 @@ function renderExpense() {
     const span = document.createElement("span");
     span.textContent = `${element.name} - Rs ${element.amount.toFixed(2)}`;
 
+    // Create Edit button
     const editBtn = document.createElement("button");
     editBtn.textContent = "Edit";
     editBtn.classList.add("edit-btn");
     editBtn.dataset.id = element.id;
 
+    // Create Delete button
     const deteteBtn = document.createElement("button");
     deteteBtn.textContent = "Delete";
     deteteBtn.classList.add("delete-btn");
@@ -111,6 +115,11 @@ expenseList.addEventListener("click", (e) => {
     if (isConfirmedEdit) {
       const idEdit = e.target.dataset.id;
       const expense = expenses.find((ex) => ex.id === Number(idEdit));
+
+      // Remember which expense is being edited
+      editingExpenseId = Number(idEdit);
+
+      // Put existing values into inputs
       expenseNameInput.value = expense.name;
       expenseAmountInput.value = expense.amount;
 
@@ -122,4 +131,31 @@ expenseList.addEventListener("click", (e) => {
       cancelBtn.classList.remove("hidden");
     }
   }
+});
+
+// User cancel the update-request
+cancelBtn.addEventListener("click", () => {
+  // Remove expence name and amount
+  expenseNameInput.value = "";
+  expenseAmountInput.value = "";
+
+  // add Update-expense button and remove add-expence button
+  updateExpenseBtn.classList.add("hidden");
+  addExpenseBtn.classList.remove("hidden");
+
+  // Cancel button
+  cancelBtn.classList.add("hidden");
+});
+
+// Update function
+updateExpenseBtn.addEventListener("click", () => {
+  const editingExpense = expenses.find((ex) => ex.id === editingExpenseId);
+  // console.log(editingExpense);
+  editingExpense.name = expenseNameInput.value;
+  editingExpense.amount = expenseAmountInput.value;
+  // console.log(editingExpense);
+  expenses.push(editingExpense);
+  saveExpenseToLocal();
+  renderExpense();
+  calculateTotal();
 });
