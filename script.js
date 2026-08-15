@@ -3,6 +3,8 @@ const expenseNameInput = document.getElementById("expense-name");
 const expenseAmountInput = document.getElementById("expense-amount");
 const expenseList = document.getElementById("expense-list");
 const totalAmountDisplay = document.getElementById("total-amount");
+const updateExpenseBtn = document.getElementById("update-expense-btn");
+const addExpenseBtn = document.getElementById("add-expense-btn");
 
 let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 renderExpense();
@@ -110,6 +112,12 @@ expenseList.addEventListener("click", (e) => {
       const expense = expenses.find((ex) => ex.id === Number(idEdit));
       expenseNameInput.value = expense.name;
       expenseAmountInput.value = expense.amount;
+
+      // add Update-expense button and remove add-expence button
+      updateExpenseBtn.classList.remove("hidden");
+      addExpenseBtn.classList.add("hidden");
+
+      // Cancel button
     }
   }
 });

@@ -24,3 +24,10 @@
 }
 
 04. Ownership of the data points
+
+
+05. How Edit function works.
+1. User clicks the edit button on any expense in the list. 
+2. The form structure will be changed as this. The label of the submit button on the form will e changed from 'Add Expense' to 'Update Expense'. Also a Cancel button will be appear in the form. The final structure would be [Expense name input] [Amount input] [Update Expense] [Cancel] 
+3. The current Expense name and amount should be displayed in the input fields.
+4. Scenario 1 - User manually enter the new expense name and amount. Scenario 2 user click the cancel and cancel the editing the form structure will be changed as [Expense name input] [Amount input] [Add Expense]  
