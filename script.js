@@ -135,27 +135,58 @@ expenseList.addEventListener("click", (e) => {
 
 // User cancel the update-request
 cancelBtn.addEventListener("click", () => {
-  // Remove expence name and amount
+  // Clear inputs
   expenseNameInput.value = "";
   expenseAmountInput.value = "";
 
-  // add Update-expense button and remove add-expence button
+  // Return form to Add mode
   updateExpenseBtn.classList.add("hidden");
   addExpenseBtn.classList.remove("hidden");
-
-  // Cancel button
   cancelBtn.classList.add("hidden");
+
+  // Reset editing state
+  editingExpenseId = null;
 });
 
 // Update function
 updateExpenseBtn.addEventListener("click", () => {
+  // Find the expense being edited
   const editingExpense = expenses.find((ex) => ex.id === editingExpenseId);
-  // console.log(editingExpense);
+
+  if (!editingExpense) {
+    return;
+  }
+
+  const name = expenseNameInput.value.trim();
+  const amount = parseFloat(expenseAmountInput.value.trim());
+
+  // Get updated values
   editingExpense.name = expenseNameInput.value;
-  editingExpense.amount = expenseAmountInput.value;
-  // console.log(editingExpense);
-  expenses.push(editingExpense);
+  editingExpense.amount = parseFloat(expenseAmountInput.value);
+
+  // Validate
+  if (name === "" || isNaN(amount) || amount <= 0) {
+    return;
+  }
+
+  // Update existing expense
+  editingExpense.name = name;
+  editingExpense.amount = amount;
+
+  // Save and refresh UI
   saveExpenseToLocal();
   renderExpense();
   calculateTotal();
+
+  // Clear inputs
+  expenseNameInput.value = "";
+  expenseAmountInput.value = "";
+
+  // Return form to Add mode
+  updateExpenseBtn.classList.add("hidden");
+  addExpenseBtn.classList.remove("hidden");
+  cancelBtn.classList.add("hidden");
+
+  // Reset editing state
+  editingExpenseId = null;
 });
